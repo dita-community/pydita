@@ -8,9 +8,19 @@
 import os
 import sys
 from io import IOBase
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+libDir = os.path.abspath(os.path.join(SCRIPT_DIR, '..'))
+sys.path.append(libDir)
+
 from lxml import etree
 from lxml.etree import XMLParser
 from lxml.etree import ElementTree
+
+from ditalib import config
+
+print('### sys.path:')
+print(sys.path)
 
 def reportErrorAndExit(msg: str):
     print(f'[ERROR] {msg}')
