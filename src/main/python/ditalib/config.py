@@ -8,6 +8,7 @@ homeDir: str = os.environ.get("HOME")
 buildPropertiesFile: str = ".build.properties"
 buildPropertiesPath: str = os.path.join(homeDir, buildPropertiesFile)
 otDirProperty: str = "dita.ot.dir"
+otDirEnvVariable: str = "DITA_OT_DIR"
 
 def readPropertiesFile(filePath: str) -> dict[str, str]:
     """Reads the specified Java properties file (name=value) into a
@@ -39,6 +40,14 @@ def getDitaOtPath() -> str:
 
     Returns:
 
-        str: The absolute path to the configured DITA OT.
+        str: The absolute path to the configured DITA OT or None if
+             the configuration is not found.
     """
-    properties: dict[str, str] = readPropertiesFile(buildPropertiesPath)
+
+    otPath: str = os.environ.get(otDirEnvVariable)
+    if otPath is None:
+        properties: dict[str, str] = readPropertiesFile(buildPropertiesPath)
+        otPath: str = properties.get(otDirProperty)
+    
+    return otPath
+    

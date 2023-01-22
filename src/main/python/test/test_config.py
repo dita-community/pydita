@@ -33,4 +33,8 @@ def test_readPropertiesFile(resourcesDir):
     assert value == expected, f'Expected value "{expected}" for property "{name}", got "{value}"'
 
 def test_getDitaOtPath(resourcesDir):
+    os.environ[config.otDirEnvVariable] = os.path.join(resourcesDir, "dita-ot")
     path: str = config.getDitaOtPath()
+    assert path is not None, f'Expected to get a value for the OT path'
+    assert os.path.exists(path), f'Expected path "{path}" to exist'
+    
