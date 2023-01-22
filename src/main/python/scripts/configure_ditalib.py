@@ -29,17 +29,18 @@ print("""
 otDirEnvVariable = "DITA_OT_DIR"
 otDir: str = os.environ.get(otDirEnvVariable)
 homeDir: str = os.environ.get("HOME")
+buildPropertiesFile: str = ".build.properties"
+buildPropertiesPath: str = os.path.join(homeDir, buildPropertiesFile)
 otDirProperty: str = "dita.ot.dir"
+saveConfig: bool = False
 
 if otDir is not None:
     print(f'[INFO] Found environment variable {otDirEnvVariable}')
 
-
 if otDir is None:
-    propFilePath = os.path.join(homeDir, ".build.properties")
     props: dict[str, str] = {}
-    if os.path.exists(propFilePath):
-        f: IOBase = open(propFilePath,'r')
+    if os.path.exists(buildPropertiesPath):
+        f: IOBase = open(buildPropertiesPath,'r')
         for line in f.readlines():
             if line.startswith('#'):
                 continue
@@ -48,7 +49,7 @@ if otDir is None:
         f.close()
         otDir = props.get(otDirProperty)
         if otDir is not None:
-            print(f'[INFO] Found property "{otDirProperty}" in configuration file "{propFilePath}"')
+            print(f'[INFO] Found property "{otDirProperty}" in configuration file "{buildPropertiesPath}"')        
     
 if otDir is None:
     inputDir = input("Enter the path to the Open Toolkit you want to use (you can use '~'): ")
@@ -56,6 +57,7 @@ if otDir is None:
         print(f'[INFO] No directory entered, quiting.')
         sys.exit(0)
     otDir = os.path.expanduser(inputDir)
+    saveConfig = True
 
 # This should always succeed at this point
 if otDir is not None:
@@ -88,3 +90,26 @@ if os.path.exists(otDir):
         reportErrorAndExit(f'Found {catalogXmlFile} but failed to parse it.')
 
     print(f'[INFO] Successfully parsed {catalogXmlFile}, should be good to go with this Open Toolkit.')
+
+if saveConfig:
+    print(f'[INFO] Saving configuration settings to ~/.build.properties')
+    lines: list[str] = ['# Python ditalib settings\n', f'{otDirProperty}={otDir}\n']
+    if os.path.exists(buildPropertiesPath):
+        print(f'[INFO] Adding {otDirProperty} entry to "{buildPropertiesPath}"...')
+        try:
+            f = open(buildPropertiesPath, 'a')
+            f.writelines(lines)
+            f.close()
+            print(f'[INFO] Configuration file updated.')
+        except Exception as err:
+            reportErrorAndExit(f'Got {err.__class__.__name__} exception "{err}" opening file {buildPropertiesPath} for write.')
+    else:
+        print(f'[INFO] Creating configuration file "{buildPropertiesPath}"...')
+        try:
+            f = open(buildPropertiesPath, 'w')
+            f.writelines(lines)
+            f.close()
+            print(f'[INFO] Configuration file created.')
+        except Exception as err:
+            reportErrorAndExit(f'Got {err.__class__.__name__} exception "{err}" opening file {buildPropertiesPath} for write.')
+    
