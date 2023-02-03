@@ -13,3 +13,5 @@ This project uses pipenv to manage dependencies. Use `pipenv shell` to create a 
 Requires Python 3.10 or newer.
 
 Requires signed commits.
+
+this is a change for educational purposes
