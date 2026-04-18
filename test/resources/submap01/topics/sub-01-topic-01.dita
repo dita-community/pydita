@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="sub-01-topic-01">
+ <title>Submap One Topic One</title>
+ <shortdesc>First topic in submap one</shortdesc>
+ <conbody>
+    <p>This is a topic in a map. Xref to topic-02 using key "topic02": <xref keyref="topic-02"/>
+    </p>
+  </conbody>
+</concept>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "task.dtd">
+<task id="filtered-topic-01" otherprops="store-future">
+    <title>Filtered Topic 01</title>
+    <shortdesc>The topic has a number of conditional elements. The root element is conditional on store-future.</shortdesc>
+    <prolog>
+        <author>ServiceNow</author>
+        <critdates>
+            <created date="2023-05-09T10:45:53-05:00"/>
+            <revised modified="2023-05-09T10:45:53-05:00"/>
+        </critdates>
+        <metadata>
+            <keywords/>
+        </metadata>
+    </prolog>
+    <taskbody>
+        <prereq>
+            <p>Role required: admin</p>
+        </prereq>
+        <steps>
+            <step otherprops="store-2023-08" id="step-store-2023-08">
+                <cmd>Filter this step on @otherprops store-2023-08</cmd>
+                <info>
+                    <p otherprops="store-2023-08">This paragraph is also conditional on store-2023-08.</p>
+                </info>
+            </step>
+            <step product="utah sandiego" id="step-utah-sandiego">
+                <cmd>Filter this step on product=utah and sandiego</cmd>
+            </step>
+            <step deliveryTarget="suite-prod">
+                <cmd>Filter this step on deliveryTarget=suite-prod</cmd>
+            </step>
+            <step id="conditional-ph">
+                <cmd>Before <ph otherprops="store-future">store future content</ph> after store-future content</cmd>
+            </step>
+        </steps>
+    </taskbody>
+</task>

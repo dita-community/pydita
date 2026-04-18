@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="reuse-01">
+  <title>Reuse Topic 01</title>
+  <shortdesc>Topic not referenced from any map but target of content references</shortdesc>
+  <conbody>
+    <p id="p-01">Reuse paragraph one.</p>
+    <p id="p-02">Reuse paragraph two.</p>
+    <p>Conref to another topic not used from any map:</p>
+    <p conref="reuse-03.dita#reuse-03/p-01"/>    
+  </conbody>
+</concept>

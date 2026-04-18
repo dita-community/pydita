@@ -26,9 +26,10 @@ def readPropertiesFile(filePath: str) -> dict[str, str]:
     if os.path.exists(filePath):
         f: IOBase = open(filePath,'r')
         for line in f.readlines():
-            if line.startswith('#'):
+            line = line.strip()
+            if not line or line.startswith('#') or '=' not in line:
                 continue
-            (name, value) = line.split('=')
+            (name, value) = line.split('=', 1)
             props[name] = value.strip()
         f.close()
     else:
@@ -46,8 +47,11 @@ def getDitaOtPath() -> str:
 
     otPath: str = os.environ.get(otDirEnvVariable)
     if otPath is None:
-        properties: dict[str, str] = readPropertiesFile(buildPropertiesPath)
-        otPath: str = properties.get(otDirProperty)
-    
+        try:
+            properties: dict[str, str] = readPropertiesFile(buildPropertiesPath)
+            otPath = properties.get(otDirProperty)
+        except FileNotFoundError:
+            otPath = None
+
     return otPath
     

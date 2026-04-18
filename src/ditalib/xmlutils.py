@@ -15,23 +15,33 @@ from ditalib import config
 from ditalib import loggingutils
 from ditalib.loggingutils import ErrorRecord
 
-# Configure the catalog path for DTD-aware parsing using the DITA OT.
-# The catalog is used to resolve DITA DTD entity references during parsing.
-_dtdAwareParser = None
+# XML catalog path is configured lazily when getDTDAwareParser() is first called.
+# Set DITA_OT_DIR environment variable (or dita.ot.dir in ~/.build.properties)
+# to enable DTD-aware parsing with entity resolution.
+_catalogConfigured = False
 
-DITAOTDIR = config.getDitaOtPath()
-catalogPath = None
-if DITAOTDIR is not None:
-    catalogPath = os.path.join(DITAOTDIR, "catalog-dita.xml")
-    # XML_CATALOG_FILES must be a space-separated list of URL-escaped paths.
-    escaped = pathname2url(catalogPath)
-    os.environ["XML_CATALOG_FILES"] = escaped
-else:
-    import logging as _logging
-    _logging.getLogger("ditalib.xmlutils").warning(
-        "No DITA OT directory found. DTD-aware parsing will not resolve entities. "
-        "Set DITA_OT_DIR or configure ~/.build.properties to fix this."
-    )
+
+def _ensureCatalogConfigured() -> None:
+    """Configure XML_CATALOG_FILES from the DITA OT path if not already done.
+
+    Called lazily so that tests or callers can set DITA_OT_DIR before parsing.
+    """
+    global _catalogConfigured
+    if _catalogConfigured:
+        return
+    _catalogConfigured = True
+
+    ditaOtDir = config.getDitaOtPath()
+    if ditaOtDir is not None:
+        catalogPath = os.path.join(ditaOtDir, "catalog-dita.xml")
+        escaped = pathname2url(catalogPath)
+        os.environ["XML_CATALOG_FILES"] = escaped
+    elif "XML_CATALOG_FILES" not in os.environ:
+        import logging as _logging
+        _logging.getLogger("ditalib.xmlutils").warning(
+            "No DITA OT directory found. DTD-aware parsing will not resolve entities. "
+            "Set DITA_OT_DIR or configure ~/.build.properties to fix this."
+        )
 
 
 def getDTDAwareParser(remove_comments: bool=False, remove_pis: bool=False) -> XMLParser:
@@ -47,13 +57,9 @@ def getDTDAwareParser(remove_comments: bool=False, remove_pis: bool=False) -> XM
 
         XMLParser: Parser configured for DTD-aware parsing.
     """
-    global _dtdAwareParser
-    if _dtdAwareParser is None:
-        parser = XMLParser(load_dtd=True, attribute_defaults=True,
-                           remove_comments=remove_comments, remove_pis=remove_pis)
-        _dtdAwareParser = parser
-    else:
-        parser = _dtdAwareParser
+    _ensureCatalogConfigured()
+    parser = XMLParser(load_dtd=True, attribute_defaults=True,
+                       remove_comments=remove_comments, remove_pis=remove_pis)
     return parser
 
 

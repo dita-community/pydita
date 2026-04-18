@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<val>
+  <!-- Exclude all values for @audience by defaults -->
+  <prop action="exclude" att="audience"/>
+  <!-- Define a flag for product="prod1" --> 
+  <prop action="flag" att="product" val="prod1" 
+    backcolor="#FFFFFF"
+    color="yellow"
+    style="italic"
+    >
+    <startflag><alt-text>[Prod One]</alt-text></startflag>
+  </prop>
+</val>
