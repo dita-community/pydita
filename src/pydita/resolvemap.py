@@ -11,11 +11,11 @@ from lxml.etree import XMLParser
 from lxml.etree import ParseError
 from urllib.parse import urljoin
 
-from ditalib import xmlutils
-from ditalib import loggingutils
-from ditalib.loggingutils import ErrorRecord
+from pydita import xmlutils
+from pydita import loggingutils
+from pydita.loggingutils import ErrorRecord
 
-from ditalib.ditaval import DitavalFilter
+from pydita.ditaval import DitavalFilter
 
 SUBMAP_TOPICGROUP_ELEM = Element("topicgroup",
                                 {

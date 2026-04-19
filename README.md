@@ -4,7 +4,7 @@ Python utilities for DITA processing: map resolution, key space construction, DI
 
 Version 0.1.0. Default branch is `develop`.
 
-The `pyproject.toml` in the project root defines this as an installable package (`ditalib`).
+The `pyproject.toml` in the project root defines this as an installable package (`pydita`).
 
 ## Documentation
 
@@ -15,19 +15,19 @@ The `pyproject.toml` in the project root defines this as an installable package 
 
 | Module | Description |
 |--------|-------------|
-| `ditalib.config` | DITA OT path discovery from `DITA_OT_DIR` or `~/.build.properties` |
-| `ditalib.xmlutils` | XML parsing helpers (DTD-aware and no-DTD parsers, element utilities) |
-| `ditalib.loggingutils` | Error recording and reporting (`SEVERITY`, `ErrorRecord`, `recordError`) |
-| `ditalib.ditaenv` | Environment helpers: Git directory detection, relative path computation |
-| `ditalib.visitor` | Visitor pattern base classes (`Visitor`, `Visitable`) |
-| `ditalib.ditaval` | DITAVAL filter: parse `.ditaval` files, filter elements |
-| `ditalib.ditavalvisitors` | Visitor that generates an Excel report from a DITAVAL filter |
-| `ditalib.resolvemap` | Resolve a DITA map tree to a single in-memory document |
-| `ditalib.ditautils` | DITA-aware utilities: conref resolution, key reference handling |
-| `ditalib.keyspace` | Key space and key definition data model |
-| `ditalib.keyspacemgr` | Key space manager: constructs and manages key spaces from a root map |
-| `ditalib.keyspacevisitors` | Visitors: pull-up/push-down, text report, Excel report for key spaces |
-| `ditalib.ditacontext` | `DitaContext`: bundles key space, DITAVAL filter, and error state |
+| `pydita.config` | DITA OT path discovery from `DITA_OT_DIR` or `~/.build.properties` |
+| `pydita.xmlutils` | XML parsing helpers (DTD-aware and no-DTD parsers, element utilities) |
+| `pydita.loggingutils` | Error recording and reporting (`SEVERITY`, `ErrorRecord`, `recordError`) |
+| `pydita.ditaenv` | Environment helpers: Git directory detection, relative path computation |
+| `pydita.visitor` | Visitor pattern base classes (`Visitor`, `Visitable`) |
+| `pydita.ditaval` | DITAVAL filter: parse `.ditaval` files, filter elements |
+| `pydita.ditavalvisitors` | Visitor that generates an Excel report from a DITAVAL filter |
+| `pydita.resolvemap` | Resolve a DITA map tree to a single in-memory document |
+| `pydita.ditautils` | DITA-aware utilities: conref resolution, key reference handling |
+| `pydita.keyspace` | Key space and key definition data model |
+| `pydita.keyspacemgr` | Key space manager: constructs and manages key spaces from a root map |
+| `pydita.keyspacevisitors` | Visitors: pull-up/push-down, text report, Excel report for key spaces |
+| `pydita.ditacontext` | `DitaContext`: bundles key space, DITAVAL filter, and error state |
 
 ## Requirements
 
@@ -39,13 +39,13 @@ The `pyproject.toml` in the project root defines this as an installable package 
 Install the package from GitHub using pip or pipenv:
 
 ```
-pipenv install git+https://github.com/dita-community/pydita.git@main#egg=ditalib
+pipenv install git+https://github.com/dita-community/pydita.git@main#egg=pydita
 ```
 
 Or add to your `Pipfile`:
 
 ```
-ditalib = {ref = "main", git = "https://github.com/dita-community/pydita.git"}
+pydita = {ref = "main", git = "https://github.com/dita-community/pydita.git"}
 ```
 
 ## Developing

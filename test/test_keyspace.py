@@ -7,16 +7,16 @@ import io
 
 from copy import copy
 
-from ditalib import keyspace, resolvemap
-from ditalib.keyspace import KeySpace, KeyDefinition
-from ditalib.keyspacemgr import KeyspaceManager
-from ditalib.keyspacevisitors import KeyspaceReportingVisitor
-from ditalib.keyspacevisitors import ExcelGeneratingKeyspaceVisitor
+from pydita import keyspace, resolvemap
+from pydita.keyspace import KeySpace, KeyDefinition
+from pydita.keyspacemgr import KeyspaceManager
+from pydita.keyspacevisitors import KeyspaceReportingVisitor
+from pydita.keyspacevisitors import ExcelGeneratingKeyspaceVisitor
 from lxml import etree
 from lxml.etree import Element, ElementTree
 from anytree import RenderTree
-from ditalib import loggingutils
-from ditalib.loggingutils import ErrorRecord
+from pydita import loggingutils
+from pydita.loggingutils import ErrorRecord
 
 
 from .fixtures import rootMap, rootMap02, resolvedMap, keyspaceMgr, rootKeySpace, outdir, recursiveKeydefMap

@@ -3,11 +3,11 @@
 import os
 import sys
 
-from ditalib import ditaenv
+from pydita import ditaenv
 
-from ditalib.visitor import Visitor
-from ditalib.ditaval import DitavalFilter
-from ditalib.ditaval import DitavalCondition
+from pydita.visitor import Visitor
+from pydita.ditaval import DitavalFilter
+from pydita.ditaval import DitavalCondition
 from typing import Any, Union
 import xlsxwriter
 

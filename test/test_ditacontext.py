@@ -5,14 +5,14 @@ import sys
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 import pytest
-from ditalib import loggingutils
-from ditalib.loggingutils import ErrorRecord, SEVERITY
-from ditalib.ditacontext import DitaContext
-from ditalib.ditaval import DitavalFilter
-from ditalib import ditautils
-from ditalib import resolvemap
-from ditalib.keyspace import KeySpace
-from ditalib.keyspacemgr import KeyspaceManager
+from pydita import loggingutils
+from pydita.loggingutils import ErrorRecord, SEVERITY
+from pydita.ditacontext import DitaContext
+from pydita.ditaval import DitavalFilter
+from pydita import ditautils
+from pydita import resolvemap
+from pydita.keyspace import KeySpace
+from pydita.keyspacemgr import KeyspaceManager
 
 from lxml import etree
 from lxml.etree import ElementTree

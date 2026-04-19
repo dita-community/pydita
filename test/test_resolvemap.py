@@ -11,9 +11,9 @@ from lxml import etree
 from lxml.etree import Element
 from lxml.etree import ElementTree
 
-from ditalib import resolvemap
-from ditalib import xmlutils
-from ditalib import loggingutils
+from pydita import resolvemap
+from pydita import xmlutils
+from pydita import loggingutils
 
 from .fixtures import rootMap
 
