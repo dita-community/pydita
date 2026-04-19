@@ -19,13 +19,13 @@ from lxml.etree import ElementTree
 from anytree import NodeMixin
 from anytree import RenderTree
 
-from ditalib import ditautils
-from ditalib.visitor import Visitor
-from ditalib.visitor import Visitable
+from pydita import ditautils
+from pydita.visitor import Visitor
+from pydita.visitor import Visitable
 
-from ditalib import xmlutils
-from ditalib import loggingutils
-from ditalib.loggingutils import ErrorRecord
+from pydita import xmlutils
+from pydita import loggingutils
+from pydita.loggingutils import ErrorRecord
 
 
 

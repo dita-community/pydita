@@ -11,9 +11,9 @@ from io import IOBase
 from lxml import etree
 from lxml.etree import Element, ElementTree
 
-from ditalib.loggingutils import ErrorRecord, recordError
-from ditalib import xmlutils
-from ditalib.visitor import Visitor, Visitable
+from pydita.loggingutils import ErrorRecord, recordError
+from pydita import xmlutils
+from pydita.visitor import Visitor, Visitable
 
 class DitavalCondition(Visitable):
     """Manages the details for a single condition.

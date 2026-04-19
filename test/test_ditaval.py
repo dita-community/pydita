@@ -8,19 +8,19 @@ from xmlrpc.client import DateTime
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 import pytest
-from ditalib import loggingutils
-from ditalib import ditaenv
-from ditalib.loggingutils import ErrorRecord
-from ditalib.ditacontext import DitaContext
-from ditalib.ditaval import DitavalFilter
-from ditalib.ditaval import DitavalCondition
-from ditalib import ditautils
-from ditalib import resolvemap
-from ditalib.keyspace import KeySpace
-from ditalib.keyspacemgr import KeyspaceManager
-from ditalib import ditaval
-from ditalib import ditavalvisitors
-from ditalib.ditavalvisitors import ExcelGeneratingDitavalVisitor
+from pydita import loggingutils
+from pydita import ditaenv
+from pydita.loggingutils import ErrorRecord
+from pydita.ditacontext import DitaContext
+from pydita.ditaval import DitavalFilter
+from pydita.ditaval import DitavalCondition
+from pydita import ditautils
+from pydita import resolvemap
+from pydita.keyspace import KeySpace
+from pydita.keyspacemgr import KeyspaceManager
+from pydita import ditaval
+from pydita import ditavalvisitors
+from pydita.ditavalvisitors import ExcelGeneratingDitavalVisitor
 
 from lxml import etree
 from lxml.etree import ElementTree

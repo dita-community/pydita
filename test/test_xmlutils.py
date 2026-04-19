@@ -6,7 +6,7 @@
 from lxml import etree
 from lxml.etree import Element, ElementTree, XMLParser
 
-from ditalib import xmlutils
+from pydita import xmlutils
 
 from .fixtures import resourcesDir, rootMap1Path
 
