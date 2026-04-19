@@ -11,9 +11,9 @@ from lxml.etree import XMLParser
 from urllib.parse import urljoin, urlparse
 from urllib.request import pathname2url
 
-from ditalib import config
-from ditalib import loggingutils
-from ditalib.loggingutils import ErrorRecord
+from pydita import config
+from pydita import loggingutils
+from pydita.loggingutils import ErrorRecord
 
 # XML catalog path is configured lazily when getDTDAwareParser() is first called.
 # Set DITA_OT_DIR environment variable (or dita.ot.dir in ~/.build.properties)
@@ -38,7 +38,7 @@ def _ensureCatalogConfigured() -> None:
         os.environ["XML_CATALOG_FILES"] = escaped
     elif "XML_CATALOG_FILES" not in os.environ:
         import logging as _logging
-        _logging.getLogger("ditalib.xmlutils").warning(
+        _logging.getLogger("pydita.xmlutils").warning(
             "No DITA OT directory found. DTD-aware parsing will not resolve entities. "
             "Set DITA_OT_DIR or configure ~/.build.properties to fix this."
         )

@@ -6,7 +6,7 @@ import sys
 
 from .fixtures import resourcesDir, rootMap1Path
 
-from ditalib import config
+from pydita import config
 
 def test_readPropertiesFile(resourcesDir):
     configPath: str = os.path.join(resourcesDir, "config", "test.properties")

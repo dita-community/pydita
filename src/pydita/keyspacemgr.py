@@ -23,20 +23,20 @@ from lxml.etree import ElementTree
 from anytree import NodeMixin
 from anytree import RenderTree
 
-from ditalib import resolvemap
+from pydita import resolvemap
 
-from ditalib.visitor import Visitor
-from ditalib.visitor import Visitable
-from ditalib.keyspacevisitors import PullUpVisitor
-from ditalib.keyspacevisitors import PushDownVisitor
-from ditalib.keyspacevisitors import KeyspaceReportingVisitor
+from pydita.visitor import Visitor
+from pydita.visitor import Visitable
+from pydita.keyspacevisitors import PullUpVisitor
+from pydita.keyspacevisitors import PushDownVisitor
+from pydita.keyspacevisitors import KeyspaceReportingVisitor
 
-from ditalib.keyspace import KeySpace
-from ditalib.keyspace import KeyDefinition
+from pydita.keyspace import KeySpace
+from pydita.keyspace import KeyDefinition
 
-from ditalib import xmlutils
-from ditalib import loggingutils
-from ditalib import ditautils
+from pydita import xmlutils
+from pydita import loggingutils
+from pydita import ditautils
 
 class KeyspaceManager(Visitable):
     """Key space manager

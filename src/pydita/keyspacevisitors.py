@@ -10,15 +10,15 @@ from lxml import etree
 from lxml.etree import Element
 from lxml.etree import ElementTree
 
-from ditalib import xmlutils
-from ditalib import ditaenv
+from pydita import xmlutils
+from pydita import ditaenv
 
-from ditalib import ditautils
-from ditalib.visitor import Visitor
-from ditalib.visitor import Visitable
+from pydita import ditautils
+from pydita.visitor import Visitor
+from pydita.visitor import Visitable
 
-from ditalib.keyspace import KeyDefinition
-from ditalib.keyspace import KeySpace
+from pydita.keyspace import KeyDefinition
+from pydita.keyspace import KeySpace
 
 from anytree import RenderTree
 

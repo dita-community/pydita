@@ -7,14 +7,14 @@ import sys
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 import pytest
-from ditalib import ditaenv
-from ditalib import xmlutils
-from ditalib import ditautils
-from ditalib import resolvemap
-from ditalib.keyspacemgr import KeyspaceManager
-from ditalib.keyspace import KeySpace
-from ditalib.ditacontext import DitaContext
-from ditalib.ditaval import DitavalFilter
+from pydita import ditaenv
+from pydita import xmlutils
+from pydita import ditautils
+from pydita import resolvemap
+from pydita.keyspacemgr import KeyspaceManager
+from pydita.keyspace import KeySpace
+from pydita.ditacontext import DitaContext
+from pydita.ditaval import DitavalFilter
 from lxml import etree
 from lxml.etree import ParseError
 from lxml.etree import ElementTree

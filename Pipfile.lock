@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ddfdfd6b8239f938eff72259adab803e98b1b79614a886b78235e423525cfbb4"
+            "sha256": "755c19583881a7c662ee23881d5bb9c6ce0fefeb274c342b0ccf12c857364d2a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -337,7 +337,7 @@
         },
         "pydita": {
             "editable": true,
-            "file": "."
+            "path": "."
         },
         "pygments": {
             "hashes": [

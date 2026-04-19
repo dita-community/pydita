@@ -19,13 +19,13 @@ from lxml.builder import E
 
 from urllib.parse import urljoin, urlparse
 
-from ditalib import xmlutils
-from ditalib import loggingutils
-from ditalib.loggingutils import ErrorRecord
+from pydita import xmlutils
+from pydita import loggingutils
+from pydita.loggingutils import ErrorRecord
 
 # These types can't be imported because it would cause circular imports
-# from ditalib.keyspace import KeySpace
-# from ditalib.keyspace import KeyDefinition
+# from pydita.keyspace import KeySpace
+# from pydita.keyspace import KeyDefinition
 
 
 def getDirectFilesFromMap(mapDoc: ElementTree, errors: dict={}, debug:bool=False) -> dict:

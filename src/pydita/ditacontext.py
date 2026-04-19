@@ -5,11 +5,11 @@
 from lxml import etree
 from lxml.etree import Element
 
-from ditalib.keyspacemgr import KeyspaceManager
-from ditalib.keyspace import KeySpace
-from ditalib.ditaval import DitavalFilter
-from ditalib import loggingutils
-from ditalib.loggingutils import ErrorRecord, SEVERITY
+from pydita.keyspacemgr import KeyspaceManager
+from pydita.keyspace import KeySpace
+from pydita.ditaval import DitavalFilter
+from pydita import loggingutils
+from pydita.loggingutils import ErrorRecord, SEVERITY
 
 class DitaContext:
     """Maintains a number of DITA-specific properties needed to do DITA processing.

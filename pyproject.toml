@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "pydita"
 version = "0.1.0"
 authors = [
-  { name="Eliot Kimber", email="ekimber@contrext.com" },
+  { name="Eliot Kimber", email="drmacro@gmail.com" },
 ]
 description = "Generic DITA processing utilities."
 readme = "README.md"
