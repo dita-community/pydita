@@ -82,8 +82,8 @@ pipenv install -e ~/workspace/pydita --dev
 
 All commits must be signed. All merges to `develop` and `main` must go through pull requests.
 
-Development is done on scratch branches named:
+Development is done on feature branches named:
 
 ```
-scratch/{mergeTarget}/{StoryNumber|NoStory}-{description}
+feature/Issue{n}-{description}
 ```
