@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="topic-03">
+    <!-- test title that has one keyref and release notes.-->
+    <!-- currently returns just the key result w/o "release notes" -->
+    <title>
+        <ph keyref="var.service-bridge"/> release notes</title>
+    <shortdesc>The third topic</shortdesc>
+    <prolog/>
+ <conbody>
+     
+ </conbody>
+</concept>

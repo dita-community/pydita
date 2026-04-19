@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="sub-02-topic-02">
+ <title>Topic Two in Submap 02</title>
+ <shortdesc>The second topic.</shortdesc>
+ <conbody>
+    <p>This is topic 2 in submap 02.</p>
+  </conbody>
+</concept>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="reuse-02">
+ <title>Reuse 02</title>
+ <shortdesc>Reuse topic 02, used from the root map via keyref.</shortdesc>
+ <conbody>
+    <p id="p-01">Reuse 02 paragraph 1.</p>
+   <p id="p-02">Reuse 02 paragraph 2.</p>
+   <p>Conref within the same topic:</p>
+   <ul>
+     <li><p conref="#./p-01"/></li>
+     <li><p conref="#./p-02"/></li>
+   </ul>
+ </conbody>
+</concept>

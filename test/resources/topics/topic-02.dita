@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="topic-02">
+ <title>Topic 02 <ph keyref="var.release-notes"/></title>
+ <shortdesc>The second topic</shortdesc>
+ <conbody>
+    <p>Topic two in the root map.</p>
+    <p>Xref to key "topic-01": <xref
+        keyref="topic-01"/></p>
+    <p>Conref to a topic not used from any map:</p>
+    <p conref="../reuse/reuse-01.dita#reuse-01/p-01"/>
+    <p>Conref to a topic used from the map using @conref:</p>
+    <p conref="../reuse/reuse-02.dita#reuse-02/p-01"/>
+    <p>Conref to same topic but different ID:</p>
+    <p conref="../reuse/reuse-02.dita#reuse-02/p-02"/>
+    <p>Conref to a topic via @conkeyref:</p>
+    <p conkeyref="reuse-02/p-01"/>
+    <p>A direct image reference:</p>
+    <image href="../images/image-02.png" id="image_qln_ybl_bwb">
+      <alt>Image two</alt>
+    </image>
+  </conbody>
+</concept>

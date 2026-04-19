@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="topic-06">
+    <!-- test title that has text and <ph> together and not two <ph> -->
+    <!-- Expected result:  Service Bridge Integrations release notes  -->
+    <!-- Current result: Service Bridge release notes -->
+    <title>
+            <ph keyref="var.service-bridge"/> Integrations release notes</title>
+    <shortdesc>The sixth topic</shortdesc>
+    <prolog/>
+ <conbody>
+     
+ </conbody>
+</concept>

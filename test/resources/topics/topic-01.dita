@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="topic-01">
+ <title>Topic 01 <ph keyref="string-01"/>
+        </title>
+ <shortdesc>The first topic</shortdesc>
+ <conbody>
+   <p>Topic one in the root map.</p>
+   <p id="p-02">Paragraph 2 with @id "p-02"</p>
+   <p>An image ref:
+   <image href="../images/image-02.png" id="image_yzs_ccl_bwb">
+     <alt>Image two</alt>
+   </image>
+   </p>
+   <p>Xref to key "topic-02": <xref keyref="topic-02"/></p>
+   <p>A conkeyref:</p>
+   <p conkeyref="reuse-02/p-02"/>
+   <section id="section-01">
+     <title>Accessibility</title>
+     <p>Accessibility section.</p>
+     <p>An old-style cross-bundle link:</p>
+     <p>Direct xref: <xref href="../submap01/topics/sub-01-topic-03.dita"/></p>
+     <p>A workflow using the <xref
+       href="https://staging-docs-servicenow.zoominsoftware.io/bundle/tokyo-servicenow-platform/page/administer/workflow/reference/workflow-editor.html"
+       format="html" scope="external" product="suite-stag">Workflow
+       editor</xref><xref
+         href="https://docs.servicenow.com/bundle/tokyo-servicenow-platform/page/administer/workflow/reference/workflow-editor.html"
+         format="html" scope="external" product="suite-prod">Workflow
+         editor</xref><xref
+           href="../topics/topic-02.dita"
+           product="local-link">Workflow editor</xref></p>
+   </section>
+ </conbody>
+  <concept id="subconcept-01">
+    <title>This is subconcept 01 in topic-01 in root map: keyref <ph keyref="another-key-for-string-01"/></title>
+    <shortdesc>A nested topic</shortdesc>
+    <related-links>
+      <link
+        href="topic-04.dita">
+        <linktext>Topic Four</linktext>
+      </link>
+      <link
+        href="https://docs.servicenow.com/bundle/tokyo-servicenow-platform/page/administer/workflow/reference/workflow-editor.html"
+        format="html"
+        scope="external"
+        product="suite-prod">
+        <linktext>Workflow editor</linktext>
+      </link>
+    </related-links>
+  </concept>
+</concept>

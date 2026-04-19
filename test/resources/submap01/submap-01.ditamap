@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map PUBLIC "-//OASIS//DTD DITA Map//EN" "map.dtd">
+<map>
+ <title>Submap One</title>
+  <topicref href="topics/sub-01-topic-01.dita" keys="topic-01"/>
+  <topicref href="topics/sub-01-topic-02.dita" keys="topic-02"/>
+  <topicref href="topics/sub-01-topic-03.dita" keys="topic-03"/>
+  <reltable>
+    <relrow>
+      <relcell>
+        <topicref keyref="key-01"/>
+      </relcell>
+      <relcell>
+        <topicref keyref="key-01"/>
+      </relcell>
+    </relrow>
+  </reltable>
+</map>
+

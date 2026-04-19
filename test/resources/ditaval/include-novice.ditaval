@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<val>
+  <!-- This DITAVAL is intended to be layered onto the base DITAVAL -->
+  <!-- Include audience="novice" -->
+  <prop action="include" att="audience" val="novice"/>
+</val>

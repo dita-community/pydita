@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="topic-11">
+    <title>Topic 11</title>
+    <shortdesc>Peer keyref to scope rootmap-02</shortdesc>
+    <prolog/>
+ <conbody>
+        <p>Crossref to key in rootmap-02: <xref keyref="root-02.topic-10"/></p>
+    </conbody>
+</concept>

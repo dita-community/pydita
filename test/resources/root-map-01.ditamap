@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map PUBLIC "-//OASIS//DTD DITA Map//EN" "map.dtd">
+<map keyscope="scope-on-root-map">
+  <title>Root Map 01</title>
+  <topichead processing-role="resource-only">
+    <topicmeta>
+      <navtitle>Key definitions</navtitle>
+    </topicmeta>
+    <keydef keys="image-01" href="images/image-01.png" format="png">
+      <topicmeta><navtitle>Image One</navtitle></topicmeta>
+    </keydef>
+    <keydef keys="now-docs" href="https://docs.servicenow.com" format="html" scope="external">
+      <topicmeta><navtitle>docs.servicenow.com</navtitle></topicmeta>
+    </keydef>
+    <keydef keys="key-01" href="topics/topic-01.dita"/>
+    <keydef keys="key-04" href="topics/topic-04.dita"/>
+    <keydef keys="string-01 another-key-for-string-01" >
+      <topicmeta>
+        <keywords>
+          <keyword>Value of string-01</keyword>
+        </keywords>
+      </topicmeta>
+    </keydef>
+   <topicgroup keyscope='var'>
+    <keydef keys="service-bridge" >
+      <topicmeta>
+        <keywords>
+          <keyword>Service Bridge</keyword>
+        </keywords>
+      </topicmeta>
+    </keydef> 
+   </topicgroup>   
+    <keydef href="reuse/reuse-02.dita" keys="reuse-02"/>
+  </topichead>
+  <topichead keyscope="var" processing-role="resource-only">
+    <topicmeta><navtitle>String keys in scope "var"</navtitle></topicmeta>
+    <keydef keys="release-notes">
+      <topicmeta>
+        <keywords>
+          <keyword>Release Notes</keyword>
+        </keywords>
+      </topicmeta>
+    </keydef>    
+  </topichead>
+  <mapref href="submap01/submap-01.ditamap" keyscope="submap01"/>
+  <mapref href="submap02/submap-02.ditamap" keyscope="submap02"/>
+  <topicref keys="topic-01" href="topics/topic-01.dita" audience="novice"/>
+  <topicref keys="topic-02" href="topics/topic-02.dita#topic-02" audience="expert"/>
+  <topicref keys="topic-09" href="topics/topic-09.dita"/>
+  <topicref keys="topic-04" keyref="key-04"/>
+  
+  <topicref
+    href="topics/topic-05.dita"
+    keys="topic-05"/>
+  <topicref
+    href="topics/topic-06.dita"
+    keys="topic-06"/>
+  <topicref
+    href="topics/topic-07.dita"
+    keys="topic-07"/>
+  <topicref
+    href="topics/topic-08.dita"
+    keys="topic-08"/>
+  <topicref
+    href="topics/topic-11.dita"
+    keys="topic-11"
+  />
+  <mapref scope="peer" keyscope="root-02" href="root-map-02.ditamap"/>
+</map>

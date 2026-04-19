@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="sub-02-topic-01">
+ <title>Submap Two Topic One</title>
+ <shortdesc>First topic in submap two</shortdesc>
+ <conbody>
+    <p>This is a topic in a map. Xref to topic-02 using key "topic02": <xref keyref="topic-02"/>
+    </p>
+    <p>XRef to a topic using direct URI reference: <xref href="../../submap01/topics/sub-01-topic-01.dita"/></p>
+   <p>Xref to a topic with @product="local-link": <xref href="../../submap01/topics/sub-01-topic-02.dita" product="local-link"/></p>
+   <p>Xref to an external-scope target: <xref href="https://docs.servicenow.com" format="html" scope="external">SN docs</xref>.</p>
+   <p>Xref to an external-scope target: <xref href="https://docs.servicenow.com" format="html">SN docs (missing @scope)</xref>.</p>
+   <p>These phrases are conditional on audience values as indicated:
+     <dl>
+       <dlentry>
+         <dt>novice</dt>
+         <dd><ph audience="novice">This is for audience="novice"</ph></dd>
+       </dlentry>
+       <dlentry>
+         <dt>expert</dt>
+         <dd><ph audience="expert">This is for audience="expert"</ph></dd>
+       </dlentry>
+       <dlentry>
+         <dt>expert or guru</dt>
+         <dd><ph audience="expert guru">This is for audience="expert" or audience="guru"</ph></dd>
+       </dlentry>
+       <dlentry>
+         <dt>guru</dt>
+         <dd><ph audience="guru">This is for audience="guru" only</ph></dd>
+       </dlentry>
+       <dlentry>
+         <dt>mutant</dt>
+         <dd><ph props="audience(mutant)">This is for audience="mutant" using @props</ph></dd>
+       </dlentry>
+     </dl>
+   </p>
+   <p>Flagging on @product: <ph product="prod1">This is specific to Product 1</ph></p>
+ </conbody>
+  <related-links>
+    <link href="sub-02-topic-01.dita"/>
+  </related-links>
+</concept>
