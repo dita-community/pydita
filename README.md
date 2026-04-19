@@ -8,8 +8,8 @@ The `pyproject.toml` in the project root defines this as an installable package 
 
 ## Documentation
 
-- [DITA key space construction algorithm](KEYSPACE_CONSTRUCTION_ALGORITHM.md)
-- [DITA key space construction guide](KEYSPACE_CONSTRUCTION_GUIDE.md)
+- [DITA key space construction algorithm](docs/KEYSPACE_CONSTRUCTION_ALGORITHM.md)
+- [DITA key space construction guide](docs/KEYSPACE_CONSTRUCTION_GUIDE.md)
 
 ## Modules
 
