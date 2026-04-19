@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DITA Key Space Construction — Animation</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f2f5; color: #333; font-size: 14px; }
+#app { max-width: 1280px; margin: 0 auto; padding: 16px; }
+h1 { font-size: 1.15rem; margin-bottom: 10px; color: #333; font-weight: 700; }
+
+/* Phase badges */
+#phase-bar { display: flex; gap: 8px; margin-bottom: 14px; }
+.phase-badge {
+  padding: 4px 14px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;
+  background: #e9ecef; color: #888; border: 2px solid #dee2e6; transition: all 0.3s;
+}
+.phase-badge.active  { background: #0d6efd; color: #fff; border-color: #0d6efd; }
+.phase-badge.done    { background: #d4edda; color: #155724; border-color: #28a745; }
+
+/* Main layout */
+#main { display: grid; grid-template-columns: 1fr 300px; gap: 16px; margin-bottom: 12px; align-items: start; }
+
+/* Key space cards */
+#keyspaces { display: flex; flex-direction: column; gap: 10px; }
+.scope-card {
+  background: #fff; border-radius: 8px; border: 2px solid #dee2e6;
+  padding: 10px 12px; transition: border-color 0.3s, box-shadow 0.3s;
+}
+.scope-card.hl { border-color: #0d6efd; box-shadow: 0 0 0 3px rgba(13,110,253,0.12); }
+.scope-card h3 {
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em;
+  color: #666; margin-bottom: 8px; font-weight: 700;
+}
+.key-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+.key-table th {
+  text-align: left; padding: 3px 6px; color: #999; font-weight: 600;
+  font-size: 0.72rem; border-bottom: 1px solid #e9ecef; white-space: nowrap;
+}
+.key-table td { padding: 3px 6px; border-bottom: 1px solid #f4f4f4; }
+.k-name { font-family: 'Courier New', monospace; font-weight: 700; white-space: nowrap; }
+.k-href { font-family: 'Courier New', monospace; white-space: nowrap; }
+.k-origin { color: #666; font-size: 0.72rem; }
+
+.key-row { transition: background 0.4s; }
+.key-row.local    { background: #d4edda; color: #155724; }
+.key-row.local .k-href  { color: #1a5c35; }
+.key-row.pullup   { background: #cce5ff; color: #004085; }
+.key-row.pullup .k-href { color: #003166; }
+.key-row.pushdown { background: #fff3cd; color: #533f03; }
+.key-row.pushdown .k-href { color: #3d2e02; }
+.key-row.overridden {
+  background: #f8d7da; color: #721c24;
+  text-decoration: line-through; opacity: 0.8;
+}
+.key-row.new-entry { animation: slide-in 0.4s ease; }
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.empty-hint { color: #bbb; font-style: italic; font-size: 0.78rem; padding: 4px 6px; }
+
+/* Map tree */
+#map-tree {
+  background: #fff; border-radius: 8px; border: 2px solid #dee2e6; padding: 14px;
+}
+#map-tree h3 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: #666; margin-bottom: 12px; font-weight: 700; }
+
+.tree, .tree ul { list-style: none; }
+.tree ul { margin-left: 12px; padding-left: 12px; border-left: 1px solid #ddd; }
+.tree li { margin: 4px 0; position: relative; }
+.tree li::before {
+  content: ''; position: absolute; left: -12px; top: 12px;
+  width: 10px; height: 1px; background: #ddd;
+}
+.tree > li::before { display: none; }
+
+.tnode {
+  display: inline-block; padding: 4px 9px; border-radius: 5px;
+  font-family: 'Courier New', monospace; font-size: 0.74rem; line-height: 1.45;
+  border: 2px solid transparent; transition: all 0.3s; cursor: default;
+}
+.tnode.maproot  { background: #dee2e6; border-color: #8d9499; color: #212529; font-weight: 700; }
+.tnode.keydef   { background: #e9ecef; border-color: #adb5bd; color: #495057; }
+.tnode.scoperef { background: #e8f4fd; border-color: #74c0fc; color: #1864ab; font-weight: 600; }
+
+.tnode.hl { border-color: #0d6efd !important; box-shadow: 0 0 0 3px rgba(13,110,253,0.2); background: #dbe9ff !important; color: #0d3a8e !important; }
+
+/* Description */
+#step-desc {
+  background: #fff; border-radius: 8px; border: 2px solid #dee2e6;
+  padding: 12px 16px; margin-bottom: 10px; min-height: 56px;
+  font-size: 0.87rem; line-height: 1.55;
+}
+#step-desc code { font-family: 'Courier New', monospace; background: #f0f0f0; padding: 1px 4px; border-radius: 3px; font-size: 0.85em; }
+
+/* Controls */
+#controls { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.btn {
+  padding: 7px 16px; border: none; border-radius: 6px; cursor: pointer;
+  font-size: 0.85rem; font-weight: 600; transition: background 0.15s;
+}
+.btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.btn-primary   { background: #0d6efd; color: #fff; }
+.btn-primary:hover:not(:disabled) { background: #0b5ed7; }
+.btn-secondary { background: #6c757d; color: #fff; }
+.btn-secondary:hover:not(:disabled) { background: #5c636a; }
+#step-counter { margin-left: auto; color: #888; font-size: 0.82rem; }
+
+/* Progress bar */
+#progress-bar-wrap { background: #e9ecef; border-radius: 4px; height: 6px; margin-bottom: 10px; overflow: hidden; }
+#progress-bar { height: 100%; background: #0d6efd; transition: width 0.3s; border-radius: 4px; }
+
+/* Legend */
+#legend {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  background: #fff; border-radius: 8px; border: 2px solid #dee2e6;
+  padding: 8px 14px; font-size: 0.76rem; align-items: center;
+}
+.leg { display: flex; align-items: center; gap: 5px; }
+.swatch { width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0; }
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>DITA Key Space Construction — Three-Phase Animation</h1>
+
+  <div id="phase-bar">
+    <span class="phase-badge" id="badge-1">Phase 1: Populate</span>
+    <span class="phase-badge" id="badge-2">Phase 2: Pull Up</span>
+    <span class="phase-badge" id="badge-3">Phase 3: Push Down</span>
+  </div>
+
+  <div id="main">
+    <div id="keyspaces">
+      <div class="scope-card" id="scope-root">
+        <h3>Root Scope (anonymous)</h3>
+        <table class="key-table">
+          <thead><tr><th>Key</th><th>Resource / href</th><th>Origin</th></tr></thead>
+          <tbody id="tbody-root"></tbody>
+        </table>
+      </div>
+      <div class="scope-card" id="scope-product">
+        <h3>Scope: product</h3>
+        <table class="key-table">
+          <thead><tr><th>Key</th><th>Resource / href</th><th>Origin</th></tr></thead>
+          <tbody id="tbody-product"></tbody>
+        </table>
+      </div>
+      <div class="scope-card" id="scope-widget">
+        <h3>Scope: widget</h3>
+        <table class="key-table">
+          <thead><tr><th>Key</th><th>Resource / href</th><th>Origin</th></tr></thead>
+          <tbody id="tbody-widget"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="map-tree">
+      <h3>Map Tree</h3>
+      <ul class="tree">
+        <li>
+          <span class="tnode maproot" id="node-root">Root Map</span>
+          <ul>
+            <li><span class="tnode keydef" id="node-root-logo">keydef<br>keys=logo<br>href=corp-logo.png</span></li>
+            <li>
+              <span class="tnode scoperef" id="node-product">topicref<br>keyscope=product</span>
+              <ul>
+                <li><span class="tnode keydef" id="node-prod-logo">keydef<br>keys=logo<br>href=prod-logo.png</span></li>
+                <li><span class="tnode keydef" id="node-prod-title">keydef<br>keys=title<br>href=prod-title.dita</span></li>
+                <li>
+                  <span class="tnode scoperef" id="node-widget">topicref<br>keyscope=widget</span>
+                  <ul>
+                    <li><span class="tnode keydef" id="node-widget-icon">keydef<br>keys=icon<br>href=widget-icon.png</span></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+  <div id="step-desc">Press <strong>Next</strong> to begin, or <strong>Play</strong> to auto-advance.</div>
+  <div id="controls">
+    <button class="btn btn-secondary" id="btn-prev" disabled>&#9664; Prev</button>
+    <button class="btn btn-primary"   id="btn-play">&#9654; Play</button>
+    <button class="btn btn-primary"   id="btn-next">Next &#9654;</button>
+    <span id="step-counter">Step 1 / 14</span>
+  </div>
+
+  <div id="legend">
+    <strong style="font-size:0.76rem">Legend:</strong>
+    <div class="leg"><div class="swatch" style="background:#d4edda;border:1px solid #28a745"></div> Local (Phase 1)</div>
+    <div class="leg"><div class="swatch" style="background:#cce5ff;border:1px solid #4dabf7"></div> Pull-up alias (Phase 2)</div>
+    <div class="leg"><div class="swatch" style="background:#fff3cd;border:1px solid #ffd43b"></div> Push-down inherited (Phase 3)</div>
+    <div class="leg"><div class="swatch" style="background:#f8d7da;border:1px dashed #721c24"></div> Overridden (lower priority)</div>
+  </div>
+</div>
+
+<script>
+// Each step: phase, desc, highlights (tree node IDs), table state for root/product/widget
+// Entry: { key, href, origin, type }  type = local | pullup | pushdown | overridden
+const STEPS = [
+  // ── Phase 1: Populate ──────────────────────────────────────────────────────
+  {
+    phase: 1,
+    desc: "<strong>Phase 1 — Populate.</strong> Walk the map tree depth-first. Each keydef element adds its key to the scope it lives in. Scope-creating topicrefs (keyscope attribute) define scope boundaries.",
+    hi: ["node-root"],
+    root: [], product: [], widget: []
+  },
+  {
+    phase: 1,
+    desc: "Visit <code>keydef keys=\"logo\" href=\"corp-logo.png\"</code> — directly inside the root map. Add <strong>logo → corp-logo.png</strong> to the root scope.",
+    hi: ["node-root-logo"],
+    root: [
+      { key:"logo", href:"corp-logo.png", origin:"local", type:"local" }
+    ],
+    product: [], widget: []
+  },
+  {
+    phase: 1,
+    desc: "Enter <code>topicref keyscope=\"product\"</code>. This element opens a new named key scope: <strong>product</strong>. All keydefs inside it belong to product, not the root.",
+    hi: ["node-product"],
+    root: [{ key:"logo", href:"corp-logo.png", origin:"local", type:"local" }],
+    product: [], widget: []
+  },
+  {
+    phase: 1,
+    desc: "Visit <code>keydef keys=\"logo\" href=\"prod-logo.png\"</code> inside product. Add <strong>logo → prod-logo.png</strong> to product. Root also has a \"logo\" — that conflict is not resolved until Phase 3.",
+    hi: ["node-prod-logo"],
+    root: [{ key:"logo", href:"corp-logo.png", origin:"local", type:"local" }],
+    product: [
+      { key:"logo", href:"prod-logo.png", origin:"local", type:"local" }
+    ],
+    widget: []
+  },
+  {
+    phase: 1,
+    desc: "Visit <code>keydef keys=\"title\" href=\"prod-title.dita\"</code> inside product. Add <strong>title → prod-title.dita</strong> to product.",
+    hi: ["node-prod-title"],
+    root: [{ key:"logo", href:"corp-logo.png", origin:"local", type:"local" }],
+    product: [
+      { key:"logo", href:"prod-logo.png", origin:"local", type:"local" },
+      { key:"title", href:"prod-title.dita", origin:"local", type:"local" }
+    ],
+    widget: []
+  },
+  {
+    phase: 1,
+    desc: "Enter <code>topicref keyscope=\"widget\"</code> nested inside product. Creates the <strong>widget</strong> scope (child of product). Descend into it.",
+    hi: ["node-widget"],
+    root: [{ key:"logo", href:"corp-logo.png", origin:"local", type:"local" }],
+    product: [
+      { key:"logo", href:"prod-logo.png", origin:"local", type:"local" },
+      { key:"title", href:"prod-title.dita", origin:"local", type:"local" }
+    ],
+    widget: []
+  },
+  {
+    phase: 1,
+    desc: "Visit <code>keydef keys=\"icon\" href=\"widget-icon.png\"</code> inside widget. Add <strong>icon → widget-icon.png</strong> to widget. <strong>Phase 1 complete</strong> — each scope contains only its directly declared keys.",
+    hi: ["node-widget-icon"],
+    root: [{ key:"logo", href:"corp-logo.png", origin:"local", type:"local" }],
+    product: [
+      { key:"logo", href:"prod-logo.png", origin:"local", type:"local" },
+      { key:"title", href:"prod-title.dita", origin:"local", type:"local" }
+    ],
+    widget: [
+      { key:"icon", href:"widget-icon.png", origin:"local", type:"local" }
+    ]
+  },
+
+  // ── Phase 2: Pull Up ───────────────────────────────────────────────────────
+  {
+    phase: 2,
+    desc: "<strong>Phase 2 — Pull Up.</strong> PullUpVisitor walks <em>post-order</em> (leaves first). Each scope qualifies its keys with its own scope name and passes them up to its parent. Start at <strong>widget</strong> — the deepest leaf scope.",
+    hi: ["node-widget"],
+    root: [{ key:"logo", href:"corp-logo.png", origin:"local", type:"local" }],
+    product: [
+      { key:"logo", href:"prod-logo.png", origin:"local", type:"local" },
+      { key:"title", href:"prod-title.dita", origin:"local", type:"local" }
+    ],
+    widget: [
+      { key:"icon", href:"widget-icon.png", origin:"local", type:"local" }
+    ]
+  },
+  {
+    phase: 2,
+    desc: "widget qualifies its key \"icon\" → <strong>widget.icon</strong> and passes it up to product's collector. product adds <strong>widget.icon → widget-icon.png</strong> to its own key space.",
+    hi: ["node-widget", "node-product"],
+    root: [{ key:"logo", href:"corp-logo.png", origin:"local", type:"local" }],
+    product: [
+      { key:"logo", href:"prod-logo.png", origin:"local", type:"local" },
+      { key:"title", href:"prod-title.dita", origin:"local", type:"local" },
+      { key:"widget.icon", href:"widget-icon.png", origin:"pull-up from widget", type:"pullup" }
+    ],
+    widget: [
+      { key:"icon", href:"widget-icon.png", origin:"local", type:"local" }
+    ]
+  },
+  {
+    phase: 2,
+    desc: "product now qualifies <em>all</em> its keys (logo, title, widget.icon) with prefix <strong>product.</strong> and passes them up to the root collector. Root gains three new qualified aliases.",
+    hi: ["node-product", "node-root"],
+    root: [
+      { key:"logo",                href:"corp-logo.png",   origin:"local",                    type:"local"  },
+      { key:"product.logo",        href:"prod-logo.png",   origin:"pull-up from product",     type:"pullup" },
+      { key:"product.title",       href:"prod-title.dita", origin:"pull-up from product",     type:"pullup" },
+      { key:"product.widget.icon", href:"widget-icon.png", origin:"pull-up from product",     type:"pullup" }
+    ],
+    product: [
+      { key:"logo",       href:"prod-logo.png",   origin:"local",                type:"local"  },
+      { key:"title",      href:"prod-title.dita", origin:"local",                type:"local"  },
+      { key:"widget.icon",href:"widget-icon.png", origin:"pull-up from widget",  type:"pullup" }
+    ],
+    widget: [
+      { key:"icon", href:"widget-icon.png", origin:"local", type:"local" }
+    ]
+  },
+  {
+    phase: 2,
+    desc: "<strong>Phase 2 complete.</strong> Root can now resolve <code>product.widget.icon</code> even though \"icon\" was declared two levels down. The \"logo\" conflict (root vs product) is still unresolved — that is handled in Phase 3.",
+    hi: [],
+    root: [
+      { key:"logo",                href:"corp-logo.png",   origin:"local",                type:"local"  },
+      { key:"product.logo",        href:"prod-logo.png",   origin:"pull-up from product", type:"pullup" },
+      { key:"product.title",       href:"prod-title.dita", origin:"pull-up from product", type:"pullup" },
+      { key:"product.widget.icon", href:"widget-icon.png", origin:"pull-up from product", type:"pullup" }
+    ],
+    product: [
+      { key:"logo",        href:"prod-logo.png",   origin:"local",               type:"local"  },
+      { key:"title",       href:"prod-title.dita", origin:"local",               type:"local"  },
+      { key:"widget.icon", href:"widget-icon.png", origin:"pull-up from widget", type:"pullup" }
+    ],
+    widget: [
+      { key:"icon", href:"widget-icon.png", origin:"local", type:"local" }
+    ]
+  },
+
+  // ── Phase 3: Push Down ─────────────────────────────────────────────────────
+  {
+    phase: 3,
+    desc: "<strong>Phase 3 — Push Down.</strong> PushDownVisitor walks <em>pre-order</em> (root first). Each scope <em>prepends</em> all of its key definitions into each direct child. Because prepending gives the incoming entries higher list priority, ancestor definitions win over same-name descendants.",
+    hi: ["node-root"],
+    root: [
+      { key:"logo",                href:"corp-logo.png",   origin:"local",                type:"local"  },
+      { key:"product.logo",        href:"prod-logo.png",   origin:"pull-up from product", type:"pullup" },
+      { key:"product.title",       href:"prod-title.dita", origin:"pull-up from product", type:"pullup" },
+      { key:"product.widget.icon", href:"widget-icon.png", origin:"pull-up from product", type:"pullup" }
+    ],
+    product: [
+      { key:"logo",        href:"prod-logo.png",   origin:"local",               type:"local"  },
+      { key:"title",       href:"prod-title.dita", origin:"local",               type:"local"  },
+      { key:"widget.icon", href:"widget-icon.png", origin:"pull-up from widget", type:"pullup" }
+    ],
+    widget: [
+      { key:"icon", href:"widget-icon.png", origin:"local", type:"local" }
+    ]
+  },
+  {
+    phase: 3,
+    desc: "Root prepends its keys into <strong>product</strong>. Collision on \"logo\": root's <code>corp-logo.png</code> lands at index 0 — it <strong>WINS</strong>. product's local <code>prod-logo.png</code> stays in the list but is now overridden (shown in red; never returned by resolveKey). Root's pull-up aliases (product.*) are also prepended.",
+    hi: ["node-root", "node-product"],
+    root: [
+      { key:"logo",                href:"corp-logo.png",   origin:"local",                type:"local"  },
+      { key:"product.logo",        href:"prod-logo.png",   origin:"pull-up from product", type:"pullup" },
+      { key:"product.title",       href:"prod-title.dita", origin:"pull-up from product", type:"pullup" },
+      { key:"product.widget.icon", href:"widget-icon.png", origin:"pull-up from product", type:"pullup" }
+    ],
+    product: [
+      { key:"logo",                href:"corp-logo.png",   origin:"push-down from root \u2014 WINS",     type:"pushdown"   },
+      { key:"logo",                href:"prod-logo.png",   origin:"local \u2014 overridden",              type:"overridden" },
+      { key:"title",               href:"prod-title.dita", origin:"local",                                type:"local"      },
+      { key:"widget.icon",         href:"widget-icon.png", origin:"pull-up from widget",                  type:"pullup"     },
+      { key:"product.logo",        href:"prod-logo.png",   origin:"push-down from root",                  type:"pushdown"   },
+      { key:"product.title",       href:"prod-title.dita", origin:"push-down from root",                  type:"pushdown"   },
+      { key:"product.widget.icon", href:"widget-icon.png", origin:"push-down from root",                  type:"pushdown"   }
+    ],
+    widget: [
+      { key:"icon", href:"widget-icon.png", origin:"local", type:"local" }
+    ]
+  },
+  {
+    phase: 3,
+    desc: "product (now carrying root's keys) prepends its full key set into <strong>widget</strong>. widget gains <code>logo</code> and <code>title</code> unqualified — resolvable from within widget without any scope prefix. All qualified aliases are also available.",
+    hi: ["node-product", "node-widget"],
+    root: [
+      { key:"logo",                href:"corp-logo.png",   origin:"local",                type:"local"  },
+      { key:"product.logo",        href:"prod-logo.png",   origin:"pull-up from product", type:"pullup" },
+      { key:"product.title",       href:"prod-title.dita", origin:"pull-up from product", type:"pullup" },
+      { key:"product.widget.icon", href:"widget-icon.png", origin:"pull-up from product", type:"pullup" }
+    ],
+    product: [
+      { key:"logo",                href:"corp-logo.png",   origin:"push-down from root \u2014 WINS",     type:"pushdown"   },
+      { key:"logo",                href:"prod-logo.png",   origin:"local \u2014 overridden",              type:"overridden" },
+      { key:"title",               href:"prod-title.dita", origin:"local",                                type:"local"      },
+      { key:"widget.icon",         href:"widget-icon.png", origin:"pull-up from widget",                  type:"pullup"     },
+      { key:"product.logo",        href:"prod-logo.png",   origin:"push-down from root",                  type:"pushdown"   },
+      { key:"product.title",       href:"prod-title.dita", origin:"push-down from root",                  type:"pushdown"   },
+      { key:"product.widget.icon", href:"widget-icon.png", origin:"push-down from root",                  type:"pushdown"   }
+    ],
+    widget: [
+      { key:"logo",                href:"corp-logo.png",   origin:"push-down via product (from root)",    type:"pushdown" },
+      { key:"title",               href:"prod-title.dita", origin:"push-down from product",               type:"pushdown" },
+      { key:"icon",                href:"widget-icon.png", origin:"local",                                type:"local"    },
+      { key:"widget.icon",         href:"widget-icon.png", origin:"push-down from product",               type:"pushdown" },
+      { key:"product.logo",        href:"prod-logo.png",   origin:"push-down via product",                type:"pushdown" },
+      { key:"product.title",       href:"prod-title.dita", origin:"push-down via product",                type:"pushdown" },
+      { key:"product.widget.icon", href:"widget-icon.png", origin:"push-down via product",                type:"pushdown" }
+    ]
+  },
+  {
+    phase: 3,
+    desc: "<strong>Phase 3 complete. All key spaces fully populated.</strong> <code>resolveKey()</code> always returns the first (highest-priority) match. Overridden entries remain in the list at lower priority but are never returned when a higher-priority match exists.",
+    hi: [],
+    root: [
+      { key:"logo",                href:"corp-logo.png",   origin:"local",                type:"local"  },
+      { key:"product.logo",        href:"prod-logo.png",   origin:"pull-up from product", type:"pullup" },
+      { key:"product.title",       href:"prod-title.dita", origin:"pull-up from product", type:"pullup" },
+      { key:"product.widget.icon", href:"widget-icon.png", origin:"pull-up from product", type:"pullup" }
+    ],
+    product: [
+      { key:"logo",                href:"corp-logo.png",   origin:"push-down from root \u2014 WINS",     type:"pushdown"   },
+      { key:"logo",                href:"prod-logo.png",   origin:"local \u2014 overridden",              type:"overridden" },
+      { key:"title",               href:"prod-title.dita", origin:"local",                                type:"local"      },
+      { key:"widget.icon",         href:"widget-icon.png", origin:"pull-up from widget",                  type:"pullup"     },
+      { key:"product.logo",        href:"prod-logo.png",   origin:"push-down from root",                  type:"pushdown"   },
+      { key:"product.title",       href:"prod-title.dita", origin:"push-down from root",                  type:"pushdown"   },
+      { key:"product.widget.icon", href:"widget-icon.png", origin:"push-down from root",                  type:"pushdown"   }
+    ],
+    widget: [
+      { key:"logo",                href:"corp-logo.png",   origin:"push-down via product (from root)",    type:"pushdown" },
+      { key:"title",               href:"prod-title.dita", origin:"push-down from product",               type:"pushdown" },
+      { key:"icon",                href:"widget-icon.png", origin:"local",                                type:"local"    },
+      { key:"widget.icon",         href:"widget-icon.png", origin:"push-down from product",               type:"pushdown" },
+      { key:"product.logo",        href:"prod-logo.png",   origin:"push-down via product",                type:"pushdown" },
+      { key:"product.title",       href:"prod-title.dita", origin:"push-down via product",                type:"pushdown" },
+      { key:"product.widget.icon", href:"widget-icon.png", origin:"push-down via product",                type:"pushdown" }
+    ]
+  }
+];
+
+// Map tree node → scope card
+const NODE_TO_SCOPE = {
+  "node-root":        "scope-root",
+  "node-root-logo":   "scope-root",
+  "node-product":     "scope-product",
+  "node-prod-logo":   "scope-product",
+  "node-prod-title":  "scope-product",
+  "node-widget":      "scope-widget",
+  "node-widget-icon": "scope-widget"
+};
+
+let current = 0;
+let playTimer = null;
+
+function rowKey(e) { return e.key + "|" + e.href + "|" + e.type; }
+
+function renderTable(scope, entries, prevEntries) {
+  const tbody = document.getElementById("tbody-" + scope);
+  const prevSet = new Set((prevEntries || []).map(rowKey));
+  tbody.innerHTML = "";
+  if (!entries || entries.length === 0) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = '<td colspan="3" class="empty-hint">(empty)</td>';
+    tbody.appendChild(tr);
+    return;
+  }
+  entries.forEach(e => {
+    const isNew = !prevSet.has(rowKey(e));
+    const tr = document.createElement("tr");
+    tr.className = "key-row " + e.type + (isNew ? " new-entry" : "");
+    tr.innerHTML =
+      `<td class="k-name">${e.key}</td>` +
+      `<td class="k-href">${e.href}</td>` +
+      `<td class="k-origin">${e.origin}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function render(idx) {
+  const step = STEPS[idx];
+  const prev = idx > 0 ? STEPS[idx - 1] : null;
+
+  // Phase badges
+  [1, 2, 3].forEach(p => {
+    const b = document.getElementById("badge-" + p);
+    b.className = "phase-badge";
+    if (p < step.phase) b.classList.add("done");
+    else if (p === step.phase) b.classList.add("active");
+  });
+
+  // Description
+  document.getElementById("step-desc").innerHTML = step.desc;
+
+  // Step counter & progress
+  document.getElementById("step-counter").textContent = `Step ${idx + 1} / ${STEPS.length}`;
+  document.getElementById("progress-bar").style.width = ((idx + 1) / STEPS.length * 100) + "%";
+
+  // Tree highlights
+  document.querySelectorAll(".tnode").forEach(n => n.classList.remove("hl"));
+  document.querySelectorAll(".scope-card").forEach(c => c.classList.remove("hl"));
+  (step.hi || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("hl");
+    const sc = NODE_TO_SCOPE[id];
+    if (sc) document.getElementById(sc).classList.add("hl");
+  });
+
+  // Tables
+  renderTable("root",    step.root,    prev ? prev.root    : []);
+  renderTable("product", step.product, prev ? prev.product : []);
+  renderTable("widget",  step.widget,  prev ? prev.widget  : []);
+
+  // Buttons
+  document.getElementById("btn-prev").disabled = idx === 0;
+  document.getElementById("btn-next").disabled = idx === STEPS.length - 1;
+}
+
+document.getElementById("btn-prev").addEventListener("click", () => {
+  if (current > 0) { current--; render(current); }
+});
+document.getElementById("btn-next").addEventListener("click", () => {
+  if (current < STEPS.length - 1) { current++; render(current); }
+});
+document.getElementById("btn-play").addEventListener("click", () => {
+  if (playTimer) {
+    clearInterval(playTimer);
+    playTimer = null;
+    document.getElementById("btn-play").textContent = "\u25B6 Play";
+  } else {
+    document.getElementById("btn-play").textContent = "\u23F8 Pause";
+    playTimer = setInterval(() => {
+      if (current < STEPS.length - 1) {
+        current++;
+        render(current);
+      } else {
+        clearInterval(playTimer);
+        playTimer = null;
+        document.getElementById("btn-play").textContent = "\u25B6 Play";
+      }
+    }, 2200);
+  }
+});
+
+// Keyboard navigation
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+    if (current < STEPS.length - 1) { current++; render(current); }
+  } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+    if (current > 0) { current--; render(current); }
+  }
+});
+
+render(0);
+</script>
+</body>
+</html>
