@@ -10,6 +10,7 @@ The `pyproject.toml` in the project root defines this as an installable package 
 
 - [DITA key space construction algorithm](docs/KEYSPACE_CONSTRUCTION_ALGORITHM.md)
 - [DITA key space construction guide](docs/KEYSPACE_CONSTRUCTION_GUIDE.md)
+- [Key space construction — animated walkthrough](docs/images/keyspace-animation.html)
 
 ## Modules
 
