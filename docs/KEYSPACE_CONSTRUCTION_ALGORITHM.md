@@ -2,10 +2,21 @@
 
 ## Diagrams
 
+### Algorithm flowcharts
+
 - [Three-phase overview](images/keyspace-construction-overview.md)
 - [Phase 1: element traversal decision tree](images/keyspace-phase1-traversal.md)
 - [Phase 2 pull-up and Phase 3 push-down](images/keyspace-phase2-phase3-propagation.md)
 - [Core data model](images/keyspace-data-model.md)
+
+### Worked example (three-frame animation)
+
+A concrete map with a root scope, a `product` child scope, and a `widget` grandchild scope.
+The root and `product` both define `logo`; the root definition wins after push-down.
+
+- [Frame 1 — Phase 1: local keys only](images/keyspace-example-phase1.md)
+- [Frame 2 — Phase 2: pull-up adds qualified aliases](images/keyspace-example-phase2.md)
+- [Frame 3 — Phase 3: push-down propagates and resolves conflict](images/keyspace-example-phase3.md)
 
 This document describes how key space construction works in the current Python implementation, centered on `keyspacemgr.py` and supported by `keyspace.py` and `keyspacevisitors.py`.
 
