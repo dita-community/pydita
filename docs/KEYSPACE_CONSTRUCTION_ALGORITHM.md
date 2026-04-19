@@ -1,5 +1,12 @@
 # DITA Key Space Construction Algorithm
 
+## Diagrams
+
+- [Three-phase overview](images/keyspace-construction-overview.md)
+- [Phase 1: element traversal decision tree](images/keyspace-phase1-traversal.md)
+- [Phase 2 pull-up and Phase 3 push-down](images/keyspace-phase2-phase3-propagation.md)
+- [Core data model](images/keyspace-data-model.md)
+
 This document describes how key space construction works in the current Python implementation, centered on `keyspacemgr.py` and supported by `keyspace.py` and `keyspacevisitors.py`.
 
 ## Scope of this algorithm
