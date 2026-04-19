@@ -1,0 +1,15 @@
+<!DOCTYPE map
+  PUBLIC "-//OASIS//DTD DITA Map//EN" "map.dtd">
+<map keyscope="a">
+    <title>Root map with an explosion of subscopes</title>
+    <topichead keyscope="b c">
+      <topicmeta><navtitle>Keyscopes B, C</navtitle></topicmeta>
+      <topichead keyscope="d e">
+        <topicmeta><navtitle>Keyscopes D, E within B, C</navtitle></topicmeta>
+            <topichead keyscope="f g">
+            <topicmeta><navtitle>Keyscopes F, G within D, E and B, C</navtitle></topicmeta>
+                <topicref keys="h i" href="topics/topic-01.dita"/>
+            </topichead>
+        </topichead>
+    </topichead>
+</map>

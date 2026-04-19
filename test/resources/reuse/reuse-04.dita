@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="reuse-04">
+ <title>Reuse 04</title>
+ <shortdesc>Reuse topic 04, only used by conref from another conref file</shortdesc>
+ <conbody>
+    <p id="p-01">Reuse 04 paragraph 1.</p>
+   <p id="p-02">Reuse 04 paragraph 2.</p>
+   <p conref="reuse-05.dita#reuse-05/p-03"/>
+ </conbody>
+</concept>

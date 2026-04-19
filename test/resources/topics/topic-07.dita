@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="topic-07">
+<!-- test title that only has text -->
+<!-- Expected result:  Service Bridge Integrations release notes  -->
+<!-- Current result = expected result -->    
+    <title>
+        Service Bridge Integrations release notes</title>
+    <shortdesc>The seventh topic</shortdesc>
+    <prolog/>
+ <conbody>
+     
+ </conbody>
+</concept>

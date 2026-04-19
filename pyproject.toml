@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pydita"
+version = "0.1.0"
+authors = [
+  { name="Eliot Kimber", email="ekimber@contrext.com" },
+]
+description = "Generic DITA processing utilities."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    # Versions after 4.9.4 use libxml 1.12, which cannot parse DITA DTDs without
+    # additional configuration to re-enable external entity parsing.
+    "lxml==4.9.4",
+    "anytree",
+    "xlsxwriter",
+    "aenum",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/dita-community/pydita"
+"Bug Tracker" = "https://github.com/dita-community/pydita/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map PUBLIC "-//OASIS//DTD DITA Map//EN" "map.dtd">
+<map>
+  <!-- Issue 18: Handle submaps with no title -->
+ <!-- <title>Submap Two</title> -->
+  <topicmeta>
+    <keywords>
+      <keyword>submap</keyword>
+      <keyword>two</keyword>
+    </keywords>
+  </topicmeta>
+  <topicref href="topics/sub-02-topic-01.dita" keys="topic-01"/>
+  <topicref href="topics/sub-02-topic-02.dita" keys="topic-02"/>
+  <reltable>
+    <relrow>
+      <relcell>
+        <topicref keyref="key-01"/>
+      </relcell>
+      <relcell>
+        <topicref keyref="topic-01"/>
+      </relcell>
+    </relrow>
+  </reltable>
+</map>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map PUBLIC "-//OASIS//DTD DITA Map//EN" "map.dtd">
+<map keyscope="scope-on-root-map">
+  <title>Recursive Keydef Map</title>
+  <keydef keys="good" href="topics/topic-01.dita"/>
+  <keydef keys="bad" keyref="bad"/>
+</map>
+  

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="topic-10">
+    <title>Topic 10</title>
+    <shortdesc>Used from Root Map 02</shortdesc>
+    <prolog/>
+ <conbody>
+        <p
+            status="changed">This is topic 10.</p>
+    </conbody>
+</concept>
