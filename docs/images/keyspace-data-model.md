@@ -17,7 +17,7 @@ classDiagram
     }
 
     class KeySpace {
-        +keyScopeNames : list~str~
+        +keyScopeNames : list
         +keydefsByKeyName : dict
         +keyspacesByScopeName : dict
         +peerKeyscopes : dict
@@ -38,7 +38,7 @@ classDiagram
 
     class KeyDefinition {
         +keyName : str
-        +keyDefiners : list~Element~
+        +keyDefiners : list
         +keySpace : KeySpace
         +getKeyName() str
         +setKeyName(name)
@@ -61,9 +61,10 @@ classDiagram
     }
 
     KeyspaceManager "1" --> "1" KeySpace : rootKeySpace
-    KeyspaceManager "1" --> "0..*" KeySpace : keyspacesByMapUri\nkeyspacesByDefiner
-    KeySpace "1" --> "0..*" KeySpace : children\n(anytree NodeMixin)
-    KeySpace "1" --> "0..*" KeyDefinition : keydefsByKeyName\n(priority-ordered lists)
+    KeyspaceManager "1" --> "0..*" KeySpace : keyspacesByMapUri
+    KeyspaceManager "1" --> "0..*" KeySpace : keyspacesByDefiner
+    KeySpace "1" --> "0..*" KeySpace : children (anytree NodeMixin)
+    KeySpace "1" --> "0..*" KeyDefinition : keydefsByKeyName (priority-ordered lists)
     KeyDefinition "1" --> "1" KeySpace : owning keySpace
     PullUpVisitor ..> KeySpace : visits (post-order)
     PushDownVisitor ..> KeySpace : visits (pre-order)
@@ -73,9 +74,9 @@ classDiagram
 
 ```mermaid
 flowchart LR
-    MapURI["Map URI\n(absolute)"] -->|"keyspacesByMapUri"| KS["KeySpace"]
-    DefElem["Defining Element\n(map or peer topicref)"] -->|"keyspacesByDefiner"| KS
-    KS -->|"getSpaceDefiner()"| DefElem
+    MapURI["Map URI (absolute)"] -->|keyspacesByMapUri| KS["KeySpace"]
+    DefElem["Defining Element (map or peer topicref)"] -->|keyspacesByDefiner| KS
+    KS -->|getSpaceDefiner| DefElem
 ```
 
 ## Key definition priority list
@@ -84,7 +85,7 @@ Each key name maps to an **ordered list** of `KeyDefinition` objects. Index 0 is
 
 ```mermaid
 flowchart LR
-    KN["keyName"] --> KD0["KeyDefinition[0]\nhighest priority"]
-    KD0 --> KD1["KeyDefinition[1]"]
-    KD1 --> KDN["KeyDefinition[n]\nlowest priority"]
+    KN["keyName"] --> KD0["KeyDefinition 0 — highest priority"]
+    KD0 --> KD1["KeyDefinition 1"]
+    KD1 --> KDN["KeyDefinition n — lowest priority"]
 ```

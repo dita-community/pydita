@@ -6,19 +6,19 @@ Pull-up makes descendant keys visible to ancestors via scope-qualified aliases. 
 
 ```mermaid
 flowchart TD
-    START(["PullUpVisitor.visitKeySpace(keySpace)"]) --> HASCHILDREN{Has\nchildren?}
+    START(["PullUpVisitor.visitKeySpace(keySpace)"]) --> HASCHILDREN{"Has children?"}
 
     HASCHILDREN -->|Yes| PUSH["Push new collector list\nonto collectedKeyDefsStack"]
-    PUSH --> VISITKIDS["Visit each child space\n(recursive — post-order)"]
+    PUSH --> VISITKIDS["Visit each child space\n(recursive, post-order)"]
     VISITKIDS --> POP["Pop collector list\n(aliases gathered from descendants)"]
-    POP --> ADDCOLLECTED["Add collected keydefs\nto currentSpace\n(addKeyDefinition)"]
+    POP --> ADDCOLLECTED["Add collected keydefs\nto currentSpace"]
     HASCHILDREN -->|No| ADDCOLLECTED
 
-    ADDCOLLECTED --> QUALIFY["For each keyDef in currentSpace:\n  for each scopeName (skip #annonymous):\n    copy keyDef\n    rename: scopeName.originalKeyName\n    append to parent collector (stack top)"]
+    ADDCOLLECTED --> QUALIFY["For each keyDef in currentSpace,\nfor each scopeName (skip annonymous scope):\ncopy keyDef, rename to scopeName.originalKeyName,\nappend to parent collector (stack top)"]
 
-    QUALIFY --> ISROOT{Is\nroot space?}
+    QUALIFY --> ISROOT{"Is root space?"}
     ISROOT -->|Yes| ADDTOROOT["Add all qualified aliases\nfrom collector to root space"]
-    ISROOT -->|No| DONE(["Return — parent will\ncollect from stack top"])
+    ISROOT -->|No| DONE(["Return — parent collects from stack top"])
     ADDTOROOT --> DONE
 ```
 
@@ -32,13 +32,16 @@ Push-down makes ancestor keys available unqualified in every descendant scope, a
 
 ```mermaid
 flowchart TD
-    START(["PushDownVisitor.visitKeySpace(keySpace)"]) --> EACHCHILD["For each child in keySpace.getChildSpaces():\n  child.addKeyDefinitions(keySpace.getKeyDefinitions())"]
+    START(["PushDownVisitor.visitKeySpace(keySpace)"]) --> EACHCHILD["For each child in getChildSpaces():\ncall child.addKeyDefinitions(parent.getKeyDefinitions())"]
 
-    EACHCHILD --> MERGE["addKeyDefinitions merges by key name:\n  if key name already exists in child →\n    prepend incoming definers (ancestor wins)\n  if key name is new →\n    add as new definition"]
+    EACHCHILD --> MERGE{"Key name already\nexists in child?"}
+    MERGE -->|Yes| PREPEND["Prepend incoming definers\nto existing list.\nAncestor wins precedence."]
+    MERGE -->|No| NEWKEY["Add as new\nkey definition"]
 
-    MERGE --> RECURSE["Recurse: visitKeySpace(child)\nfor each child"]
+    PREPEND --> RECURSE["Recurse: visitKeySpace(child)\nfor each child"]
+    NEWKEY --> RECURSE
 
-    RECURSE --> DONE(["All descendants now contain\nfully merged visible key set"])
+    RECURSE --> DONE(["All descendants contain\nfully merged visible key set"])
 ```
 
 **Effect:** After push-down, content anywhere in the map tree can resolve keys defined in any ancestor scope without qualification, and ancestor definitions take precedence over same-name descendant definitions.
