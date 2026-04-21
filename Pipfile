@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 # Versions after 4.9.4 use libxml 1.12, which cannot parse DITA DTDs without
 # additional configuration to re-enable external entity parsing.
-lxml = "==4.9.4"
+lxml = "==6.1.0"
 anytree = "*"
 xlsxwriter = "*"
 aenum = "*"
